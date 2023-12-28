@@ -1,0 +1,7 @@
+home_controller:
+    resource: App\Home\HomeController
+    type: attribute
+
+calc_controller:
+    resource: App\Quiz\QuizController
+    type: attribute

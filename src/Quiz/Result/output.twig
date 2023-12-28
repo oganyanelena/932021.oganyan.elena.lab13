@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/1946/1946488.png">
+    <link rel="stylesheet" href="{{ asset('/styles/base.css') }}">
+    <title>Hello Quiz - Backend3</title>
+
+</head>
+<body>
+<header>
+    <h3 class="h1-header">Backend3</h3>
+    <a class="button-header" href="{{ path('show_home') }}">Mockups</a>
+</header>
+<div class="content">
+    <div class="main-header">Quiz results</div>
+    {% set correctAnswersNumber = 0 %}
+    {% for result in resultDTOs %}
+        {% if result.isCorrect %}
+            {% set correctAnswersNumber = correctAnswersNumber + 1 %}
+        {% endif %}
+    {% endfor %}
+    <div style="font-size: 2vh;">Correct answers <span class="right-answers">{{ correctAnswersNumber }}</span> out of <span class="all-answers">{{ resultDTOs|length }}</span></div>
+    <ol class="answers">
+        {% for result in resultDTOs %}
+            <li>{{ result.firstValue }} {{ result.operation }} {{ result.secondValue }} = {{ result.userAnswer ?? 'No answer was provided' }}
+                {% if result.isCorrect %}(correct){% endif %}
+            </li>
+        {% endfor -%}
+    </ol>
+</div>
+<div class="line"></div>
+<footer>© 2023 - Backend3</footer>
+</body>
+</html>

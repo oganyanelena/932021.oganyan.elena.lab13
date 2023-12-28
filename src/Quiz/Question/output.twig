@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('styles/base.css') }}">
+    <title>Task 11</title>
+
+</head>
+<body>
+<header>
+    <h3 class="h1-header">Backend2</h3>
+    <a class="button-header" href="{{ path('show_home') }}">Home</a>
+</header>
+<div class="content">
+    <h1 class="content-header">Quiz</h1>
+    <div>
+        {{ form_start(form, {'method': 'POST'}) }}
+        {% if form_errors(form) is not null %}
+            <div>
+                {% for error in form.vars.errors %}
+                    <span class="content-header">{{ error.message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <p class="content-header">{{ question.firstValue }} {{ question.operationSymbol }} {{ question.secondValue }} =</p>
+        <div>
+            {{ form_label(form.answer) }}
+            <div>
+                {{ form_widget(form.answer, {'attr': {
+                    'class': 'first-input'
+                }}) }}
+            </div>
+            {% if form_errors(form.answer) != null %}
+                <div>
+                    {% for error in form.answer.vars.errors %}
+                        <span class="content-header">{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <button class="next-btn" type="submit">Next</button>
+        {{ form_label(form.finish) }}
+        {{ form_widget(form.finish, {'attr': {
+            'class': 'finish-btn'
+        }}) }}
+        {{ form_end(form) }}
+    </div>
+</div>
+<div class="line"></div>
+<footer>© 2023 - Backend2</footer>
+</body>
+</html>

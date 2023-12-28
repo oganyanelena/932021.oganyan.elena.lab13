@@ -1,0 +1,43 @@
+name: 'lab13'
+services:
+
+  app:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm/Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-php
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - backend-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/conf.d/default.conf
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+    name: ${COMPOSE_PROJECT_NAME}-backend
+
+volumes:
+  dbdata:
+    driver: local
+
+configs:
+  nginx_config:
+    file: ./docker/nginx/conf.d/default.conf
